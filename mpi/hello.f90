@@ -34,6 +34,7 @@ program main
 !    ISBN: 0262571323,
 !    LC: QA76.642.G76.
 !
+  implicit none
   include 'mpif.h'
 
   integer ( kind = 4 ) error
