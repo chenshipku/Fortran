@@ -1,2 +1,27 @@
-https://www.jianshu.com/p/6d1fb17c679a
+（1）下载和安装：搜索mpich，选择Windows或戳https://msdn.microsoft.com/en-us/library/bb524831(v=vs.85).aspx下载Microsoft MPI v7.1中的两个文件，MSMpiSetup.exe和msmpisdk.msi，分别安装好。
+
+（2）调用系统命令提示符，Windows菜单栏，输入cmd，跳出一个黑色对话框，输入代码 set MSMPI就会出现图1，下面有四个路径，三类，分别是Bin路径、Include路径、Lib路径，未来你会使用到这些路径
+
+（3）VS上新建一个Project，如果你是x64位机器，修改debug编译环境从win32到x64
+
+（4）添加Include路径，打开Include文件夹会发现里面都是.h格式的文件，称为头文件，里面还有两个文件夹x86和x64，因此你需要把你需要的路径都添加进去。此处我只需要添加Include路径和x64位的路径，目的是把头文件都引用进去。项目-属性，Fortran-General下找到Additional Include Directories输入C:\Program Files (x86)\Microsoft SDKs\MPI\Include\x64;C:\Program Files (x86)\Microsoft SDKs\MPI\Include。路径之间用英文分号隔开；
+
+（5）添加Lib路径，同样打开lib文件夹，里面.lib格式的文件分别在x64或x86中，我是64位，所以赋值路径C:\Program Files (x86)\Microsoft SDKs\MPI\Lib\x64到——项目-属性-Linker-General-Additional Library Directories
+
+（6）添加文件名到——Linker-Input-Additional Dependencies（附加依赖项），输入lib文件夹中的所有文件名，之间用空格隔开，用分号隔开会出现错误msmpi.lib msmpifec.lib msmpifmc.lib。另外，不同VS版本、不同语言这三个填的位置可能不一样，但是都是在这三个地方Additional Include Directories，Additional Library Directories，Additional Dependencies
+
+（7）环境配置成功。新建你的f90源文件，build solution，Debug文件夹里会出现exe文件，我这是Console1.exe，这个文件可以复制到任意地方
+
+（8）exe所在文件夹在DoS窗口打开，可以手动操作Shift+w，也可以Dos命令操作。
+
+输入命令 mpiexec.exe -n 4 Console1.exe
+
+和linux相似，必须在DOS窗口执行，慢慢习惯会发现这样挺好的。
+
+
+作者：Stephen_YU
+链接：https://www.jianshu.com/p/6d1fb17c679a
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
 其中debug编译环境从32到64的更改在mpi属性-Linker-配置管理器中
