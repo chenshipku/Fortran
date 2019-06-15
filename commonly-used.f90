@@ -13,7 +13,6 @@ do myid=0,23
   write(infile,*)myid
   open(10,file='D:\data\'//Trim(AdjustL(infile))//'.dat',status='replace')
   open(11,file='D:\data\e2.dat',access='direct',form='formatted',recl=16,status='old')
-  !file11: direct read
   read(10,*,iostat=ierr)n(j)%nt,n(j)%t0,n(j)%vp,n(j)%theta,n(j)%x1,n(j)%y1,n(j)%z1,n(j)%vx1,n(j)%vy1,n(j)%vz1,n(j)%w1,n(j)%wvp
   read(11,fmt='(F15.9)',rec=6*nt-5,iostat=error)x2
   read(11,fmt='(F15.9)',rec=6*nt-4,iostat=error)y2
