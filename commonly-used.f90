@@ -24,3 +24,23 @@ do myid=0,23
 end do
 
 end
+
+program main
+  implicit none
+  real*8::freq,t,bigt,E0,Et,phi,pi,gamma,wadk1
+  integer::n
+  open(10,file='field.dat')
+  pi=3.1415926d0
+  E0=0.0535d0
+  freq=0.05695d0
+  bigt=2d0*pi/freq
+  n=3
+  phi=0.5*pi
+  t=0d0
+  do while(t<3d0*bigt)
+    Et=-E0*dsin((freq*t)/(2d0*real(n)))**2d0*dsin(freq*t+phi)
+    write(10,*)t/bigt,Et
+    t=t+1
+  end do
+end
+
