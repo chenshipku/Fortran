@@ -27,19 +27,28 @@ end
 
 program main
   implicit none
-  real*8::freq,t,bigt,E0,Et,phi,pi,gamma,wadk1
+  real*8::freq,t,bigt,E0,Et,phi,pi,gamma,ip1,kappa1,zc1,nstar,e,cnl,vp,wadk,wvp
   integer::n
   open(10,file='field.dat')
-  pi=3.1415926d0
+  pi=3.1415926535897932384626d0
   E0=0.0535d0
   freq=0.05695d0
   bigt=2d0*pi/freq
   n=3
   phi=0.5*pi
+  ip1=0.44576d0   !Xe: 12.129874eV
+  kappa1=dsqrt(2d0*ip1)
+  zc1=1d0
+  nstar=zc1/kappa1
+  e=2.7182818284d0
+  cnl=(2d0*e/nstar)**nstar/dsqrt(2d0*pi*nstar)
+  vp=0d0
   t=0d0
   do while(t<3d0*bigt)
     Et=-E0*dsin((freq*t)/(2d0*real(n)))**2d0*dsin(freq*t+phi)
-    write(10,*)t/bigt,Et
+    wadk=cnl**2d0*ip1*(2d0*kappa1**3d0/dabs(Et))**(2d0*nstar-1)*dexp(-2d0*kappa1**3d0/(3d0*dabs(Et)))
+    wvp=(vp*dsqrt(2d0*ip1)/dabs(Et)/pi)*dexp(-dsqrt(2d0*ip1)*vp**2d0/dabs(Et))
+    write(10,*)t/bigt,Et,wadk
     t=t+1
   end do
 end
